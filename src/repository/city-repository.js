@@ -13,11 +13,12 @@ class CityRepository {
     
     async deleteCity(cityId){
         try {
-            City.destroy({
+            const response = await City.destroy({
                 where:{
                     id:cityId
                 }
             })
+            return response;
         } catch (error) {
             console.log("something went wrong in the repository layer");
             throw {error};
