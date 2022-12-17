@@ -30,7 +30,7 @@ url -> city/:id
 const destory = async(req,res)=>{
     try {
         const response = await CityService.deleteCity(req.params.id);
-        return res.status(201).json({
+        return res.status(200).json({
             data : response , 
             success : true,
             message : "Successfully deleted a city",
@@ -52,8 +52,8 @@ url -> city/:id
 */
 const get = async (req,res)=>{
         try {
-            const response = CityService.getCity(req.body.id);
-            return res.status(201).json({
+            const response = await CityService.getCity(req.params.id);
+            return res.status(200).json({
                 data : response , 
                 success : true,
                 message : "Successfully fetched a city",
@@ -77,7 +77,7 @@ const get = async (req,res)=>{
 const update = async (req,res)=>{
     try {
         const response = CityService.updateCity(req.params.id , req.body );
-        return res.status(201).json({
+        return res.status(200).json({
             data : response , 
             success : true,
             message : "Successfully updated a city",
