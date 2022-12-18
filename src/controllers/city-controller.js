@@ -75,7 +75,8 @@ url -> city/
 */
 const getAll = async (req,res)=>{
     try {
-            const response = await CityService.getAllCities();
+
+            const response = await CityService.getAllCities(req.query);
             return res.status(200).json({
                 data : response , 
                 success : true,
