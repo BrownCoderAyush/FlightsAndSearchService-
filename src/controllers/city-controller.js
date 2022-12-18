@@ -69,14 +69,38 @@ const get = async (req,res)=>{
             })
         }
 }
+/*
+GET 
+url -> city/
+*/
+const getAll = async (req,res)=>{
+    try {
+            const response = await CityService.getAllCities();
+            return res.status(200).json({
+                data : response , 
+                success : true,
+                message : "Successfully fetched all cities",
+                err : {}
+            })
 
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data : {} , 
+            success : false,
+            message : "Not able to fetch cities",
+            err : error
+        })
+    }
+}
 /**
     PATCH
     url -> city/:id , req.body 
  */
 const update = async (req,res)=>{
     try {
-        const response = CityService.updateCity(req.params.id , req.body );
+        console.log(req.body);
+        const response = await CityService.updateCity(req.params.id , req.body );
         return res.status(200).json({
             data : response , 
             success : true,
@@ -95,5 +119,5 @@ const update = async (req,res)=>{
 }
 
 module.exports = {
-    create,get,update,destory
+    create,get,update,destory,getAll
 }
