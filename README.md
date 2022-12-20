@@ -35,3 +35,15 @@ and then execute `npx sequelize db:migrate`
 - A flight belongs to an airplane but one airplane can be used for multiple flights . 
 - A city have many airports but an airport belongs to a city 
  
+# Tables
+
+### City -> id , name , created_at , updated_at 
+
+### Airport -> id , name , address , created_at , updated_at 
+
+  Relationship - A city can have many airports but an airport belongs to a city .
+
+
+ ```
+ npx sequelize model:generate --name Airport --attributes name:String,address:String,cityId:integer
+ ``` 
