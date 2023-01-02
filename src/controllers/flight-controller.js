@@ -68,10 +68,29 @@ const getFlight = async (req,res)=>{
             success: false,
             message: "Not able to fetch a flight based on data provided ",
             err: error
-        })
+        });
+    }
+}
+
+const updateFlight = async (req,res)=>{
+    try {
+        const response = await FlightService.updateFlight(req.params.id , req.body);
+        return res.status(SuccessCodes.CREATED).json({
+            data:response,
+            success:true,
+            err:{},
+            message:'Successfully able to update a flight based on data provided',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to update a flight based on data provided ",
+            err: error
+        });
     }
 }
 
 module.exports = {
-    create , getAll , getFlight
+    create , getAll , getFlight , updateFlight
 }
