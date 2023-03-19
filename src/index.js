@@ -9,7 +9,7 @@ const db = require('./models/index');
 // for temporary purpose 
 const CityRepository = require('./repository/city-repository');
 const {cityService} = require('./service/index')
-const {Airport , City } = require('./models/index');
+const {Airport , City  , Flights } = require('./models/index');
 
 
 const setupAndStartServer = async ()=>{
@@ -26,6 +26,7 @@ const setupAndStartServer = async ()=>{
         if(process.env.SYNC_DB){
             db.sequelize.sync({alter:false});
         }
+        // await Flights.create()
     })
 }
 

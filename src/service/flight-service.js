@@ -13,6 +13,7 @@ class FlightService{
         }
         try {
              const airplane = await this.airplaneRepository.getAirplane(data.airplaneId);
+             if(!airplane) throw {message : "Invalid airplaneId"};
             const flight = await this.flightRepository.createFlight({...data , totalSeats : airplane.capacity });
             return flight;
         } catch (error) {

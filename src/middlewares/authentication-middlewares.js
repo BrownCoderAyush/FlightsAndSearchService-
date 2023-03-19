@@ -1,20 +1,30 @@
 const axios = require('axios');
+const { AUTH_SERVICE_PATH } = require('../config/serverConfig');
 
 const isAuthenticated = async (req,res,next)=>{
     const token = req.headers['x-access-token'];
-    console.log("token and its type" , token , typeof token);
-    console.log(token);
+    
     let data = {
         headers: {
             "x-access-token": token,
             "content-type": "application/json"
         }
     };
-    const AuthAuthenticationURL = `http://localhost:3001/api/v1/isAuthenticated`;
+    try { 
+        const AuthAuthenticationURL = `${AUTH_SERVICE_PATH}/api/v1/isAuthenticated`;    
+        const response = await axios.get(AuthAuthenticationURL , data);
+        // next();
+    } catch (error) {
 
-    const response = await axios.get(AuthAuthenticationURL , data);
+        return res.status(401).json({
+            data: {},
+            success: false,
+            message: "Authentication error invalid or malformed token",
+            err: error
+        })
 
-    console.log(response);
+    }
+
 
     next();
 }
