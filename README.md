@@ -4,7 +4,12 @@
 - clone the project on your local
 - Execute `npm install` on the same path as of your root directory of teh downloaded project
 - Create a `.env` file in the root directory and add the following environment variable
-    - `PORT=3000`
+```
+PORT=3000
+SYNC_DB=true
+AUTH_SERVICE_PATH='http://localhost:3001'
+```
+
 - Inside the `src/config` folder create a new file `config.json` and then add the following piece of json
 
 ```
@@ -45,12 +50,26 @@ and then execute `npx sequelize db:migrate`
 
 ### City -> id , name , created_at , updated_at 
 
-### Airport -> id , name , address , created_at , updated_at 
+### Airport -> id , name , address , cityId , created_at , updated_at 
 
   Relationship - A city can have many airports but an airport belongs to a city .
 
-
  ```
+ npx sequelize model:generate --name City --attributes name:String
+
  npx sequelize model:generate --name Airport --attributes name:String,address:String,cityId:integer
  ``` 
+
+### Airplane -> modelNumber , capacity , created_at , updated_at 
+
+```
+npx sequelize model:generate --name Airplane --attributes modelNumber:String,capacity:integer
+```
+
+### flight -> flightNumber , airplaneId , departureAirportId , arrivalAirportId , arrivalTime , departureTime , price , boardingGate , totalSeats
+
+```
+npx sequelize model:generate --name Flights 
+--attributes flightNumber:String,airplaneId:integer,departureAirportId:integer,arrivalAirportId:integer,arrivalTime:date,departureTime:date,price:integer,boardingGate:String,totalSeats:integer,price:integer
+```
 
