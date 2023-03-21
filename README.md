@@ -21,9 +21,15 @@
 ```
 
 - Once you've added your db config as listed above, go to the src folder from your terminal and execute `npx sequelize db:create`
-and then execute `npx sequelize db:migrate` 
+and then execute `npx sequelize db:migrate`
 
+## Seeding files 
+- to seed the data for seeding files in your MySQL db run following commands sequentially . 
 
+   `npx sequelize-cli db:seed --seed 20221221102941-add-city.js`\
+   `npx sequelize-cli db:seed --seed 20221219080935-add-airports.js`\
+   `npx sequelize-cli db:seed --seed 20221220160705-add-airplanes.js`
+   
 # DB design 
 
   - Airplane table   

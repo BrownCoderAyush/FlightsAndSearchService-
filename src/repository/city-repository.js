@@ -1,5 +1,6 @@
 const {Op} = require("sequelize");
 const {City , Airport} = require("../models/index");
+const {AppError , ValidationError } = require("../utils/error/index.js")
 
 class CityRepository {
     async createCity({name}){
@@ -7,8 +8,15 @@ class CityRepository {
             const city = await City.create({name});
             return city;
         }catch(error){
-            console.log("something went wrong in the repository layer");
-            throw {error};
+            if(error.name == 'SequelizeValidationError' || error.name == 'SequelizeUniqueConstraintError'){
+                throw new ValidationError(error);
+            }
+            throw AppError(
+                'RepositoryError',
+                'Cannot create Booking',
+                'There was some issue creating the booking, please try again later',
+                StatusCodes.INTERNAL_SERVER_ERROR
+            )
         }
     }
     

@@ -1,6 +1,7 @@
 const {Flights} = require('../models/index');
 const {Op} = require('sequelize');
-
+const {AppError , ValidationError } = require("../utils/error/index.js");
+const {StatusCodes} = require('http-status-codes');
 class FlightRepositroy{
 
     #createFilter(data){
@@ -43,8 +44,15 @@ class FlightRepositroy{
             return flight;  
         } catch (error) {
             console.log("Something went wrong in the repository layer ");
-            // console.log(error.errors[0].message);
-            throw {error};
+            if(error.name == 'SequelizeValidationError' || error.name == 'SequelizeUniqueConstraintError'){
+                throw new ValidationError(error);
+            }
+            throw new AppError(
+                'RepositoryError',
+                'Cannot create flight',
+                ['There was some issue creating the flight, please try again later'],
+                StatusCodes.INTERNAL_SERVER_ERROR
+            )
         }
     }
 
@@ -54,7 +62,12 @@ class FlightRepositroy{
             return flight;
         } catch (error) {
             console.log("Something went wrong in the repository layer ");
-            throw {error};
+            throw new AppError(
+                'RepositoryError',
+                'Cannot get flight',
+                ['There was some issue getting the flight, please try again later'],
+                StatusCodes.INTERNAL_SERVER_ERROR
+            )
         }
     }
 
@@ -67,7 +80,14 @@ class FlightRepositroy{
             return flights;
         } catch (error) {
             console.log("Something went wrong in the repository layer getAllflights");
-            throw {error};
+            // throw {error};
+            throw new AppError(
+                'RepositoryError',
+                'Cannot get All flights',
+                ['There was some issue getting the flight, please try again later'],
+                StatusCodes.INTERNAL_SERVER_ERROR
+            )
+
         }
     }
 
@@ -81,7 +101,13 @@ class FlightRepositroy{
             return true;          
         } catch (error) {
             console.log("something went wrong in the repository layer while updating flight");
-            throw {error};
+            throw new AppError(
+                'RepositoryError',
+                'Cannot update flight',
+                ['There was some issue updating the flight, please try again later'],
+                StatusCodes.INTERNAL_SERVER_ERROR
+            )
+
         }
     }
 }

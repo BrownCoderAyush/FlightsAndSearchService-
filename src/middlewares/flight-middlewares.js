@@ -1,5 +1,6 @@
-const { ClientErrorCodes } = require('../utils/error-codes');
-
+const { ClientErrorCodes } = require('../utils/error/error-codes');
+const {StatusCodes} = require('http-status-codes');
+const {AppError} = require('../utils/error/index.js');
 const validateCreateFlight = (req, res, next) => {
     if(
         !req.body.flightNumber ||
@@ -15,7 +16,11 @@ const validateCreateFlight = (req, res, next) => {
             data: {},
             success: false,
             message: 'Invalid request body for create flight',
-            err: 'Missing mandatory properties to create a flight'
+            err: new AppError('Inappropriate details'
+                             ,'Cannot validate details',
+                              ['Check weahter the input fields are empty or not'],
+                                StatusCodes.INTERNAL_SERVER_ERROR
+                              )
         });
     }
 
