@@ -1,4 +1,7 @@
 # Welcome to Flights Service
+## Description 
+
+This is a part of a series of microservices on Flight Management System mainly foccused on delivering flight and search API routes.
 
 ## Project Setup
 - clone the project on your local
@@ -72,4 +75,432 @@ npx sequelize model:generate --name Airplane --attributes modelNumber:String,cap
 npx sequelize model:generate --name Flights 
 --attributes flightNumber:String,airplaneId:integer,departureAirportId:integer,arrivalAirportId:integer,arrivalTime:date,departureTime:date,price:integer,boardingGate:String,totalSeats:integer,price:integer
 ```
+
+# API
+
+## City Model 
+
+- Schema example 
+
+```
+  {
+      "id" : 1 , 
+      "name" : "Delhi"
+      "createdAt" : "2023-03-19 07:10:49"
+      "updatedAt" : "2023-03-19 07:10:49" 
+  }
+
+```
+### Routes 
+
+**Desc**: Create city 
+
+**Route** : `/city`
+
+**Method**: `POST`
+
+**Body** : 
+
+```
+  {
+    "name" : "jhasi"
+  }
+```
+
+**Response** : 
+
+```
+   {
+    "data": {
+        "id": 28,
+        "name": "jhasi",
+        "updatedAt": "2023-04-22T18:14:48.571Z",
+        "createdAt": "2023-04-22T18:14:48.571Z"
+    },
+    "success": true,
+    "message": "Successfully created a city",
+    "err": {}
+}
+```
+
+---
+
+**Desc**: Delete city 
+
+**Route** : `/city/cityId`
+
+**Method**: `DELETE`
+
+**Response** :
+
+```
+{
+    "data": 1,
+    "success": true,
+    "message": "Successfully deleted a city",
+    "err": {}
+}
+```
+
+---
+
+**Desc**: Get city 
+
+**Route** : `/city/cityId`
+
+**Method**: `GET`
+
+**Response** : 
+```
+   {
+    "data": {
+        "id": 20,
+        "name": "delhi",
+        "createdAt": "2023-03-19T07:10:49.000Z",
+        "updatedAt": "2023-03-19T07:10:49.000Z"
+    },
+    "success": true,
+    "message": "Successfully fetched a city",
+    "err": {}
+}   
+
+``` 
+
+---
+
+**Desc**: Get all cities 
+
+**Route** : `/city`
+
+**Method**: `GET`
+
+
+**Response** : 
+
+```
+  {
+    "data": [
+        {
+            "id": 20,
+            "name": "delhi",
+            "createdAt": "2023-03-19T07:10:49.000Z",
+            "updatedAt": "2023-03-19T07:10:49.000Z"
+        },
+        {
+            "id": 21,
+            "name": "pune",
+            "createdAt": "2023-03-19T07:10:49.000Z",
+            "updatedAt": "2023-03-19T07:10:49.000Z"
+        },
+        {
+            "id": 25,
+            "name": "Mumbai",
+            "createdAt": "2023-03-19T07:10:49.000Z",
+            "updatedAt": "2023-03-19T07:10:49.000Z"
+        },
+        {
+            "id": 26,
+            "name": "allahbad",
+            "createdAt": "2023-03-19T07:10:49.000Z",
+            "updatedAt": "2023-03-19T07:10:49.000Z"
+        }
+    ],
+    "success": true,
+    "message": "Successfully fetched all cities",
+    "err": {}
+}
+```
+
+---
+
+**Desc**: Get all airports corresponding to cityId 
+
+**Route** : `/city/airports/cityId`
+
+**Method**: `GET`
+
+**Response** : 
+
+```
+{
+    "data": [
+        {
+            "id": 4,
+            "name": "Indira Gandhi International Airport",
+            "address": null,
+            "cityId": 20,
+            "createdAt": "2023-03-19T07:12:59.000Z",
+            "updatedAt": "2023-03-19T07:12:59.000Z"
+        },
+        {
+            "id": 5,
+            "name": "Safdarjung Airport",
+            "address": null,
+            "cityId": 20,
+            "createdAt": "2023-03-19T07:12:59.000Z",
+            "updatedAt": "2023-03-19T07:12:59.000Z"
+        }
+    ],
+    "success": true,
+    "message": "Successfully fetched airports of a city",
+    "err": {}
+}
+```
+
+---
+
+**Desc**: Update city 
+
+**Route** : `/city/cityId`
+
+**Method**: `PATCH`
+
+**Response** : 
+
+```
+{
+    "data": {
+        "id": 20,
+        "name": "delhi",
+        "createdAt": "2023-03-19T07:10:49.000Z",
+        "updatedAt": "2023-03-19T07:10:49.000Z"
+    },
+    "success": true,
+    "message": "Successfully updated a city",
+    "err": {}
+}
+```
+
+## Flight model
+
+- Schema example
+
+
+```
+{
+
+    "flightNumber" : "Pk 120" , 
+    "airplaneId" : 4 , 
+    "departureAirportId" :  25 , 
+    "arrivalAirportId" : 26 ,
+    "arrivalTime" : 2018-03-29 10:34:00 , 
+    "departureTime" : 2018-03-29 3:34:00 , 
+    "price" : 2400 , 
+    "boardingGate" : "A2" , 
+    "totalSeats" : 300
+
+}
+```
+### Routes 
+
+**Desc**: Create flight 
+
+**Route** : `/flights`
+
+**Method**: `POST`
+
+**Body** : 
+
+```
+{
+
+    "flightNumber" : "Pk 12" , 
+    "airplaneId" : 4 , 
+    "departureAirportId" :  25 , 
+    "arrivalAirportId" : 26 ,
+    "arrivalTime" : 2018-03-29 10:34:00 , 
+    "departureTime" : 2018-03-29 3:34:00 , 
+    "price" : 2400 , 
+    "boardingGate" : "A2" , 
+    "totalSeats" : 300
+
+}
+  
+```
+
+**Response** : 
+
+```
+   {
+    "data": {
+        "id": 24,
+        "flightNumber": "Pk 12",
+        "airplaneId": "4",
+        "departureAirportId": "25",
+        "arrivalAirportId": "26",
+        "arrivalTime": "2018-03-29T05:04:00.000Z",
+        "departureTime": "2018-03-28T22:04:00.000Z",
+        "boardingGate": "A2",
+        "price": "2400",
+        "totalSeats": 300,
+        "updatedAt": "2023-04-22T18:32:32.836Z",
+        "createdAt": "2023-04-22T18:32:32.836Z"
+    },
+    "success": true,
+    "err": {},
+    "message": "Successfully created a flight"
+}
+```
+
+---
+
+**Desc**: Fetch All flights  
+
+**Route** : `/flights`
+
+**Method**: `GET`
+
+**Response** : 
+
+```
+   {
+    "data": [
+        {
+            "id": 1,
+            "flightNumber": "UK 128",
+            "airplaneId": 1,
+            "departureAirportId": 20,
+            "arrivalAirportId": 21,
+            "arrivalTime": "2018-03-29T05:04:00.000Z",
+            "departureTime": "2018-03-28T22:04:00.000Z",
+            "price": 2400,
+            "boardingGate": "A2",
+            "totalSeats": 269,
+            "createdAt": "2023-03-19T07:50:23.000Z",
+            "updatedAt": "2023-04-21T17:00:46.000Z"
+        },
+        {
+            "id": 3,
+            "flightNumber": "Pk 12",
+            "airplaneId": 4,
+            "departureAirportId": 25,
+            "arrivalAirportId": 26,
+            "arrivalTime": "2018-03-29T05:04:00.000Z",
+            "departureTime": "2018-03-28T22:04:00.000Z",
+            "price": 2400,
+            "boardingGate": "A2",
+            "totalSeats": 300,
+            "createdAt": "2023-03-19T07:54:03.000Z",
+            "updatedAt": "2023-03-19T07:54:03.000Z"
+        }
+    ],
+    "success": true,
+    "err": {},
+    "message": "Successfully able to fetch all flights based on data provided"
+}
+```
+---
+
+**Desc**: Fetch flights 
+
+**Route** : `/flights/flightId`
+
+**Method**: `GET`
+
+**Response** : 
+
+```
+  {
+    "data": {
+        "id": 3,
+        "flightNumber": "Pk 120",
+        "airplaneId": 4,
+        "departureAirportId": 25,
+        "arrivalAirportId": 26,
+        "arrivalTime": "2018-03-29T05:04:00.000Z",
+        "departureTime": "2018-03-28T22:04:00.000Z",
+        "price": 2400,
+        "boardingGate": "A2",
+        "totalSeats": 300,
+        "createdAt": "2023-03-19T07:54:03.000Z",
+        "updatedAt": "2023-03-19T07:54:03.000Z"
+    },
+    "success": true,
+    "err": {},
+    "message": "Successfully able to fetch flight based on data provided"
+}
+```
+---
+
+**Desc**: Update flight
+
+**Route** : `/flights/flightId`
+
+**Method**: `GET` 
+
+**Body** : 
+```
+  {
+      "flightNumber" : "S3" 
+  }
+```
+
+**Response** : 
+
+```
+  {
+    "data": true,
+    "success": true,
+    "err": {},
+    "message": "Successfully able to update a flight based on data provided"
+  }
+
+```
+
+## Airport Model 
+
+- Schema Example 
+
+```
+  {
+      "name" : "JC Bose" , 
+      "address" : "Salt Lake" , 
+      "cityId" : 25 , 
+      "createdAt": "2023-03-19T07:50:23.000Z",
+      "updatedAt": "2023-04-21T17:00:46.000Z"
+  }
+
+```
+
+**Desc**: Create Airport
+
+**Route** : `/airports`
+
+**Method**: `POST` 
+
+**Body** : 
+```
+  {
+      "name" : "JC Bose" , 
+      "address" : "Salt Lake" , 
+      "cityId" : 25 , 
+  }
+```
+
+**Response** : 
+
+```
+  {
+    "data": {
+        "id": 7,
+        "name": "JC Bose",
+        "address": "Salt Lake",
+        "cityId": "25",
+        "updatedAt": "2023-04-22T18:59:46.207Z",
+        "createdAt": "2023-04-22T18:59:46.207Z"
+    },
+    "success": true,
+    "err": {},
+    "message": "Created a new airport"
+}
+
+```
+
+
+
+
+
+
+
+
 
